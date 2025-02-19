@@ -95,7 +95,7 @@ This example shows what `testResults` can look like.
                     "error": {
                         "columnNumber": 8,
                         "fileName": "http://localhost:8000/source/assert.js",
-            ​​​​​​            "lineNumber": 1,
+                        "lineNumber": 1,
                         "message": "Expected an error, but none was thrown",
                         "stack": "AssertionError@http://localhost:8000/source/assert.js:1:8..."
                     }

@@ -1,0 +1,17 @@
+{
+  "name": "@kompanie/testwerk",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "A dependency-free, buildless testing framework for browsers and node.js",
+  "main": "index.js",
+  "repository": "github:kompanie-dev/testwerk",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "npx diener --livereload --port=8000"
+  },
+  "devDependencies": {
+    "@kompanie/diener": "^1.0.4",
+    "eslint": "^9.20.1"
+  }
+}

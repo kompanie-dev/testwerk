@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<title>Testwerk Tests</title>
+
+<link rel="stylesheet" href="../source/testwerk.css">
+
+<body class="testwerk">
+    <div id="testResults"></div>
+
+    <script type="module">
+        import { TestRunnerConsole, TestRunnerHtml } from "../index.js";
+        import { AssertAsyncTests } from "./assertAsyncTests.js";
+        import { AssertEqualityTests } from "./assertEqualityTests.js";
+        import { AssertFailTests } from "./assertFailTests.js";
+        import { AssertInstanceTests } from "./assertInstanceTests.js";
+        import { AssertNanTests } from "./assertNanTests.js";
+        import { AssertNumberTests } from "./assertNumberTests.js";
+        import { AssertRegexTests } from "./assertRegexTests.js";
+        import { AssertThrowsTests } from "./assertThrowsTests.js";
+        import { AssertTypeTests } from "./assertTypeTests.js";
+        import { AssertUndefinedOrNullTests } from "./assertUndefinedOrNullTests.js";
+
+        const asyncTimeout = 2000;
+        const testClasses = [AssertAsyncTests, AssertEqualityTests, AssertFailTests, AssertInstanceTests, AssertNanTests, AssertNumberTests, AssertRegexTests, AssertThrowsTests, AssertTypeTests, AssertUndefinedOrNullTests];
+
+        const testResultElement = document.getElementById("testResults");
+        const testRunnerHtml = new TestRunnerHtml(asyncTimeout);
+        testRunnerHtml.run(testResultElement, ...testClasses);
+
+        const testRunnerConsole = new TestRunnerConsole(asyncTimeout);
+        testRunnerConsole.run(...testClasses);
+    </script>
+</body>

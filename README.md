@@ -1,6 +1,6 @@
 # Testwerk 🏭
 
-A dependency-free, buildless testing framework for browsers and node.js environments.
+A dependency-free, buildless test runner for browsers and node.js environments.
 
 ## Getting Started
 
@@ -17,8 +17,10 @@ Each public function is treated as a test.
 If you need helper functions inside your test class, use [private functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties).
 Async functions are also supported and will automatically fail if they reach the configured `asyncTimeout`.
 
+The following examples use `@kompanie/assert`. You can use any other assertion library that throws errors if an assertion fails.
+
 ```js
-import { Assert } from "@kompanie/testwerk";
+import { Assert } from "@kompanie/assert";
 
 export class MyTests {
     add_shouldCorrectlyAdd() {

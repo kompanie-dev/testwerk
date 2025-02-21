@@ -2,7 +2,7 @@
   "name": "@kompanie/testwerk",
   "version": "1.0.0",
   "license": "MIT",
-  "description": "A dependency-free, buildless testing framework for browsers and node.js",
+  "description": "A dependency-free, buildless test runner for browsers and node.js",
   "main": "index.js",
   "repository": "github:kompanie-dev/testwerk",
   "type": "module",

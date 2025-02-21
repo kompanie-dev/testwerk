@@ -9,25 +9,15 @@
 
     <script type="module">
         import { TestRunnerConsole, TestRunnerHtml } from "../index.js";
-        import { AssertAsyncTests } from "./assertAsyncTests.js";
-        import { AssertEqualityTests } from "./assertEqualityTests.js";
-        import { AssertFailTests } from "./assertFailTests.js";
-        import { AssertInstanceTests } from "./assertInstanceTests.js";
-        import { AssertNanTests } from "./assertNanTests.js";
-        import { AssertNumberTests } from "./assertNumberTests.js";
-        import { AssertRegexTests } from "./assertRegexTests.js";
-        import { AssertThrowsTests } from "./assertThrowsTests.js";
-        import { AssertTypeTests } from "./assertTypeTests.js";
-        import { AssertUndefinedOrNullTests } from "./assertUndefinedOrNullTests.js";
+        import { TestRunnerTest } from "./testRunnerTest.js";
 
         const asyncTimeout = 2000;
-        const testClasses = [AssertAsyncTests, AssertEqualityTests, AssertFailTests, AssertInstanceTests, AssertNanTests, AssertNumberTests, AssertRegexTests, AssertThrowsTests, AssertTypeTests, AssertUndefinedOrNullTests];
 
         const testResultElement = document.getElementById("testResults");
         const testRunnerHtml = new TestRunnerHtml(asyncTimeout);
-        testRunnerHtml.run(testResultElement, ...testClasses);
+        testRunnerHtml.run(testResultElement, TestRunnerTest);
 
         const testRunnerConsole = new TestRunnerConsole(asyncTimeout);
-        testRunnerConsole.run(...testClasses);
+        testRunnerConsole.run(TestRunnerTest);
     </script>
 </body>

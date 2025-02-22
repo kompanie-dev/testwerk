@@ -26,8 +26,8 @@ export class TestRunnerHtml {
             const testClassStatusIcon = successfulTests === testClass.results.length ? "✅" : "❌";
 
             finalHtml += /*html*/`
-                <h2>${testClassStatusIcon} ${testClass.name} (${successfulTests} of ${testClass.results.length} successful)</h2>
-                <table>
+                <h2 class="testwerk-class-head">${testClassStatusIcon} ${testClass.name} (${successfulTests} of ${testClass.results.length} successful)</h2>
+                <table class="testwerk-table">
             `;
 
             for (const testFunctionResult of testClass.results) {
@@ -43,8 +43,8 @@ export class TestRunnerHtml {
                 if (testFailed === true) {
                     finalHtml += /*html*/`
                         <td class="testwerk-function-data-error">
-                            <p class="testwerk-error-message">${testFunctionResult.error.message}</p>
-                            <hr>
+                            <div class="testwerk-error-message">${testFunctionResult.error.message}</div>
+                            <hr class="testwerk-ruler">
                             <textarea class="testwerk-error-stack" readonly cols="90" rows="12">${testFunctionResult.error.stack}</textarea>
                         </td>
                     `;

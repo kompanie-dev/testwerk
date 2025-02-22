@@ -1,4 +1,4 @@
-* {
+body.testwerk-body {
     background: #000;
     box-sizing: border-box;
     color: #ccc;
@@ -7,24 +7,24 @@
     padding: 0;
 }
 
-h2 {
+h2.testwerk-class-head {
     margin-bottom: 10px;
     margin-top: 25px;
 }
 
-hr {
+hr.testwerk-ruler {
     margin-bottom: 7px;
     margin-top: 7px;
 }
 
-table, td, th {
+table.testwerk-table, .testwerk-table td, .testwerk-table th {
     border: 1px solid #ccc;
     border-left: none;
     border-right: none;
     border-collapse: collapse;
 }
 
-td {
+.testwerk-table td {
     padding: 5px;
     vertical-align: top;
 }
@@ -42,7 +42,9 @@ td.testwerk-function-data-name {
 }
 
 .testwerk-error-stack {
+    background: #333;
     border: none;
+    color: #ccc;
     resize: none;
 }
 

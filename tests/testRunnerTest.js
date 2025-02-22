@@ -15,6 +15,14 @@ export class TestRunnerTest {
         throw Error("My error message");
     }
 
+    async asyncFunction_promiseResolve_shouldPass() {
+        return Promise.resolve();
+    }
+
+    async asyncFunction_promiseReject_shouldPass() {
+        return Promise.reject();
+    }
+
     async asyncFunction_takingTooLong_shouldFail() {
         return new Promise((resolve, reject) => {
             setTimeout(() => {

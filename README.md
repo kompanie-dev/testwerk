@@ -87,6 +87,7 @@ This example shows what `testResults` can look like.
 ```json
 {
     "completionTime": 1739974557847,
+    "executionTime": 3014,
     "testResults": [
         {
             "name": "MyOtherTests",

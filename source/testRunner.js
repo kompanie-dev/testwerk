@@ -6,15 +6,19 @@ export class TestRunner {
     }
 
     async run(...testClasses) {
+        const startTime = Date.now();
+
         const testClassPromises = testClasses.map(
             testClass => this.runTestClass(testClass)
         );
 
         const testResults = await Promise.all(testClassPromises);
+        const endTime = Date.now();
 
         return {
             testResults,
-            completionTime: Date.now()
+            completionTime: endTime,
+            executionTime: endTime - startTime
         };
     }
 

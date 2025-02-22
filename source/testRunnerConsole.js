@@ -9,7 +9,7 @@ export class TestRunnerConsole {
     }
 
     async run(...testClasses) {
-        console.info("Executing tests. Please wait...");
+        console.info("⏱️ Executing tests. Please wait...");
 
         const testRunner = new TestRunner(this.#asyncTimeout);
         const testResult = await testRunner.run(...testClasses);
@@ -19,7 +19,7 @@ export class TestRunnerConsole {
 
     showResults(testResult) {
         const timeStamp = formatDate(testResult.completionTime);
-        console.info(`Test results ${timeStamp}`);
+        console.info(`🏭 Tests finished on ${timeStamp}, taking ${testResult.executionTime}ms`);
 
         for (const testClass of testResult.testResults) {
             console.info("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");

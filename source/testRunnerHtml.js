@@ -9,7 +9,7 @@ export class TestRunnerHtml {
     }
 
     async run(containerElement, ...testClasses) {
-        containerElement.innerHTML = `Executing tests. Please wait...`;
+        containerElement.innerHTML = `⏱️ Executing tests. Timeout is set to ${this.#asyncTimeout}ms. Please wait...`;
 
         const testRunner = new TestRunner(this.#asyncTimeout);
         const testResult = await testRunner.run(...testClasses);
@@ -19,7 +19,7 @@ export class TestRunnerHtml {
 
     showResults(testResult, containerElement) {
         const timeStamp = formatDate(testResult.completionTime);
-        let finalHtml = `<h1>Test Results</h1><span>Finished on ${timeStamp}</span>`;
+        let finalHtml = `<h1>🏭 Test Results</h1><span>⏱️ Finished on ${timeStamp}, taking ${testResult.executionTime}ms</span>`;
 
         for (const testClass of testResult.testResults) {
             const successfulTests = testClass.results.filter(testFunctionResult => testFunctionResult.error === undefined).length;

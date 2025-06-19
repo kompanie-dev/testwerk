@@ -39,6 +39,22 @@ export class MyTests {
     #myHelperFunction() {
         // I'm not treated as test
     }
+
+    afterAll() {
+        // Executed after all tests are finished
+    }
+
+    afterEach() {
+        // Runs after each individual test
+    }
+
+    beforeAll() {
+        // Runs before test execution starts
+    }
+
+    beforeEach() {
+        // Runs before each individual test
+    }
 }
 ```
 
@@ -123,4 +139,4 @@ npm test
 
 You can then open your browser.
 The test project outputs to the console and HTML.
-It also has two failing tests to show the visualization of failed tests in the console and the HTML.
+It also has three failing tests to show the visualization of failed tests in the console and the HTML.

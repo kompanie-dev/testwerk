@@ -26,14 +26,17 @@ export class TestRunner {
         const instance = new testClass();
         const results = [];
 
-        const functionNames =
+        const testFunctionNames =
             Object
                 .getOwnPropertyNames(testClass.prototype)
                 .filter(
-                    propertyName => propertyName !== "constructor" && instance[propertyName] instanceof Function
+                    propertyName => ["constructor", "afterAll", "afterEach", "beforeAll", "beforeEach"].includes(propertyName) === false &&
+                    instance[propertyName] instanceof Function
                 );
 
-        for (let functionName of functionNames) {
+        const testFunctionNamesWithLifeCycle = ["beforeAll", ...testFunctionNames, "afterAll"];
+
+        for (let functionName of testFunctionNamesWithLifeCycle) {
             const testFunctionResult = await this.runTestFunction(instance, functionName);
 
             results.push(testFunctionResult);

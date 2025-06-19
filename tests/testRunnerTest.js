@@ -1,4 +1,12 @@
 export class TestRunnerTest {
+    afterAll() {
+        console.log("afterAll");
+    }
+
+    beforeAll() {
+        console.log("beforeAll");
+    }
+
     syncFunction_throwingNoError_shouldPass() {
 
     }
@@ -8,7 +16,7 @@ export class TestRunnerTest {
     }
 
     async asyncFunction_throwingNoError_shouldPass() {
-        
+
     }
 
     async asyncFunction_throwingError_shouldFail() {

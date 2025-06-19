@@ -15,7 +15,7 @@ npm i @kompanie/testwerk
 Tests are organized into classes.
 Each public function is treated as a test.
 If you need helper functions inside your test class, use [private functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties).
-Async functions are also supported and will automatically fail if they reach the configured `asyncTimeout`.
+Async functions are also supported and will automatically fail if they reach the configured `asyncTestTimeout`.
 
 The following examples use `@kompanie/assert`. You can use any other assertion library that throws errors if an assertion fails.
 
@@ -68,9 +68,14 @@ Your tests can be executed and visualized either as HTML (browser) or in the con
 import { TestRunnerHtml } from "@kompanie/testwerk";
 import { MyTests } from "./tests/myTest.js";
 
-const asyncTimeout = 5000; // Optional, 5000ms by default
+const runnerConfig = {
+    asyncTestTimeout: 5000,
+    afterEachTimeout: 500,
+    beforeEachTimeout: 500 
+}; // Optional, these are the defaults
+
 const testResultContainer = document.getElementById("test-result-container");
-const testRunnerHtml = new TestRunnerHtml(asyncTimeout);
+const testRunnerHtml = new TestRunnerHtml(runnerConfig);
 testRunnerHtml.run(testResultContainer, MyTest); // Add your test classes here. No array declaration needed.
 ```
 
@@ -80,8 +85,13 @@ testRunnerHtml.run(testResultContainer, MyTest); // Add your test classes here. 
 import { TestRunnerConsole } from "@kompanie/testwerk";
 import { MyTests } from "./tests/myTest.js";
 
-const asyncTimeout = 5000; // Optional, 5000ms by default
-const testRunnerConsole = new TestRunnerConsole(asyncTimeout);
+const runnerConfig = {
+    asyncTestTimeout: 5000,
+    afterEachTimeout: 500,
+    beforeEachTimeout: 500 
+}; // Optional, these are the defaults
+
+const testRunnerConsole = new TestRunnerConsole(runnerConfig);
 testRunnerConsole.run(MyTest); // Add your test classes here. No array declaration needed.
 ```
 
@@ -93,8 +103,13 @@ You can also use your own code to parse and visualize the output of `TestRunner`
 import { TestRunner } from "@kompanie/testwerk";
 import { MyOtherTests } from "./tests/myOtherTests.js";
 
-const asyncTimeout = 5000; // Optional, 5000ms by default
-const testRunner = new TestRunner(asyncTimeout);
+const runnerConfig = {
+    asyncTestTimeout: 5000,
+    afterEachTimeout: 500,
+    beforeEachTimeout: 500 
+}; // Optional, these are the defaults
+
+const testRunner = new TestRunner(runnerConfig);
 const testResults = await testRunner.run(MyOtherTests); // Add your test classes here. No array declaration needed.
 ```
 

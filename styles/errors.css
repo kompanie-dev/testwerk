@@ -1,0 +1,10 @@
+.testwerk-error-message {
+    font-weight: 700;
+}
+
+.testwerk-error-stack {
+    background: #333;
+    border: none;
+    color: #ccc;
+    resize: none;
+}

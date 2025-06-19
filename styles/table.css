@@ -1,0 +1,23 @@
+table.testwerk-table, .testwerk-table td, .testwerk-table th {
+    border: 1px solid #ccc;
+    border-left: none;
+    border-right: none;
+    border-collapse: collapse;
+}
+
+.testwerk-table td {
+    padding: 5px;
+    vertical-align: top;
+}
+
+td.testwerk-function-data-error {
+    min-width: 500px;
+}
+
+td.testwerk-function-data-executiontime {
+    min-width: 90px;
+}
+
+td.testwerk-function-data-name {
+    min-width: 340px;
+}

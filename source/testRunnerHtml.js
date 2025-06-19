@@ -37,7 +37,7 @@ export class TestRunnerHtml {
 
             finalHtml += /*html*/`
                 <details ${allTestsSuccessful === false ? "open" : ""}>
-                    <summary class="testwerk-class-head">${testClassStatusIcon} ${testClass.name} (${successfulTests} of ${testClass.results.length} successful)</summary>
+                    <summary class="testwerk-summary">${testClassStatusIcon} ${testClass.name} (${successfulTests} of ${testClass.results.length} successful)</summary>
                     <table class="testwerk-table">
             `;
 
@@ -55,7 +55,7 @@ export class TestRunnerHtml {
                     finalHtml += /*html*/`
                         <td class="testwerk-function-data-error">
                             <div class="testwerk-error-message">${testFunctionResult.error.message}</div>
-                            <hr class="testwerk-ruler">
+                            <hr class="testwerk-hr">
                             <textarea class="testwerk-error-stack" readonly cols="90" rows="12">${testFunctionResult.error.stack}</textarea>
                         </td>
                     `;

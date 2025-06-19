@@ -1,0 +1,8 @@
+body.testwerk-body {
+    background: #000;
+    box-sizing: border-box;
+    color: #ccc;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
+}

@@ -1,8 +1,12 @@
 export class TestRunner {
-    #asyncTimeout;
+    #asyncTestTimeout;
+    #afterEachTimeout;
+    #beforeEachTimeout;
 
-    constructor(asyncTimeout = 5000) {
-        this.#asyncTimeout = asyncTimeout;
+    constructor({ asyncTestTimeout = 5000, afterEachTimeout = 500, beforeEachTimeout = 500 }) {
+        this.#asyncTestTimeout = asyncTestTimeout;
+        this.#afterEachTimeout = afterEachTimeout;
+        this.#beforeEachTimeout = beforeEachTimeout;
     }
 
     async run(...testClasses) {
@@ -48,28 +52,39 @@ export class TestRunner {
         };
     }
 
+    async executeTestFunctionWithTimeout(testFunction, functionName, timeout) {
+        const functionPromiseOrResult = testFunction();
+
+        if (functionPromiseOrResult instanceof Promise) {
+            functionPromiseOrResult.catch(promiseError => { throw promiseError; });
+
+            const timeoutPromise = new Promise(
+                (_, reject) => {
+                    setTimeout(
+                        () => reject(new Error(`${functionName} took longer than ${timeout}ms and timed out`)), timeout
+                    );
+                });
+            
+            await Promise.race([
+                functionPromiseOrResult,
+                timeoutPromise
+            ]);
+        }
+    }
+
     async runTestFunction(testClassInstance, functionName) {
         const startTime = performance.now();
         let error;
 
         try {
-            const functionPromiseOrResult = testClassInstance[functionName]();
+            if (functionName !== "beforeAll" && functionName !== "afterAll" && testClassInstance.beforeEach instanceof Function) {
+                await this.executeTestFunctionWithTimeout(testClassInstance.beforeEach, `${functionName}.beforeEach`, this.#beforeEachTimeout);
+            }
 
-            if (functionPromiseOrResult instanceof Promise) {
-                functionPromiseOrResult.catch(promiseError => { throw promiseError; });
-
-                const timeoutPromise = new Promise(
-                    (_, reject) => {
-                        setTimeout(
-                            () => reject(new Error("Test timed out")), this.#asyncTimeout
-                        );
-                    });
-               
-
-                await Promise.race([
-                    functionPromiseOrResult,
-                    timeoutPromise
-                ]);
+            await this.executeTestFunctionWithTimeout(testClassInstance[functionName], functionName, this.#asyncTestTimeout);
+            
+            if (functionName !== "beforeAll" && functionName !== "afterAll" && testClassInstance.afterEach instanceof Function) {
+                await this.executeTestFunctionWithTimeout(testClassInstance.afterEach, `${functionName}.afterEach`, this.#afterEachTimeout);
             }
         }
         catch (executionError) {

@@ -2,16 +2,25 @@ import { TestRunner } from "./testRunner.js";
 import { formatDate } from "./formatDate.js";
 
 export class TestRunnerConsole {
-    #asyncTimeout;
+    #asyncTestTimeout;
+    #afterEachTimeout;
+    #beforeEachTimeout;
 
-    constructor(asyncTimeout = 5000) {
-        this.#asyncTimeout = asyncTimeout;
+    constructor({ asyncTestTimeout = 5000, afterEachTimeout = 500, beforeEachTimeout = 500 }) {
+        this.#asyncTestTimeout = asyncTestTimeout;
+        this.#afterEachTimeout = afterEachTimeout;
+        this.#beforeEachTimeout = beforeEachTimeout;
     }
 
     async run(...testClasses) {
         console.info("⏱️ Executing tests. Please wait...");
 
-        const testRunner = new TestRunner(this.#asyncTimeout);
+        const testRunnerConfig = {
+            asyncTestTimeout: this.#asyncTestTimeout,
+            afterEachTimeout: this.#afterEachTimeout,
+            beforeEachTimeout: this.#beforeEachTimeout
+        };
+        const testRunner = new TestRunner(testRunnerConfig);
         const testResult = await testRunner.run(...testClasses);
     
         this.showResults(testResult);

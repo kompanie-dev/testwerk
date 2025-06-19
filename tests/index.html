@@ -11,13 +11,17 @@
         import { TestRunnerConsole, TestRunnerHtml } from "../index.js";
         import { TestRunnerTest } from "./testRunnerTest.js";
 
-        const asyncTimeout = 2000;
+        const runnerConfig = {
+            asyncTestTimeout: 2000,
+            afterEachTimeout: 500,
+            beforeEachTimeout: 500 
+        }
 
         const testResultElement = document.getElementById("testResults");
-        const testRunnerHtml = new TestRunnerHtml(asyncTimeout);
+        const testRunnerHtml = new TestRunnerHtml(runnerConfig);
         testRunnerHtml.run(testResultElement, TestRunnerTest);
 
-        const testRunnerConsole = new TestRunnerConsole(asyncTimeout);
+        const testRunnerConsole = new TestRunnerConsole(runnerConfig);
         testRunnerConsole.run(TestRunnerTest);
     </script>
 </body>

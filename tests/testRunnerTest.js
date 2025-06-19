@@ -1,10 +1,18 @@
 export class TestRunnerTest {
     afterAll() {
-        console.log("afterAll");
+        
+    }
+
+    afterEach() {
+        
     }
 
     beforeAll() {
-        console.log("beforeAll");
+        
+    }
+
+    beforeEach() {
+        
     }
 
     syncFunction_throwingNoError_shouldPass() {

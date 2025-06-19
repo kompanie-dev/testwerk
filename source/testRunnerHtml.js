@@ -32,11 +32,13 @@ export class TestRunnerHtml {
 
         for (const testClass of testResult.testResults) {
             const successfulTests = testClass.results.filter(testFunctionResult => testFunctionResult.error === undefined).length;
-            const testClassStatusIcon = successfulTests === testClass.results.length ? "✅" : "❌";
+            const allTestsSuccessful = successfulTests === testClass.results.length;
+            const testClassStatusIcon = allTestsSuccessful ? "✅" : "❌";
 
             finalHtml += /*html*/`
-                <h2 class="testwerk-class-head">${testClassStatusIcon} ${testClass.name} (${successfulTests} of ${testClass.results.length} successful)</h2>
-                <table class="testwerk-table">
+                <details ${allTestsSuccessful === false ? "open" : ""}>
+                    <summary class="testwerk-class-head">${testClassStatusIcon} ${testClass.name} (${successfulTests} of ${testClass.results.length} successful)</summary>
+                    <table class="testwerk-table">
             `;
 
             for (const testFunctionResult of testClass.results) {
@@ -65,7 +67,7 @@ export class TestRunnerHtml {
                 finalHtml += "</tr>";
             }
 
-            finalHtml += "</table>";
+            finalHtml += "</table></details>";
         }
 
         containerElement.innerHTML = finalHtml;

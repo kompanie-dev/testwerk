@@ -28,7 +28,16 @@ export class TestRunnerHtml {
 
     showResults(testResult, containerElement) {
         const timeStamp = formatDate(testResult.completionTime);
-        let finalHtml = `<h1>🏭 Test Results</h1><span>⏱️ Finished on ${timeStamp}, taking ${testResult.executionTime}ms</span>`;
+
+        let totalTests = 0;
+        let successfulTests = 0;
+
+        for (const testClass of testResult.testResults) {
+            totalTests += testClass.results.length;
+            successfulTests += testClass.results.filter(testFunctionResult => testFunctionResult.error === undefined).length;
+        }
+
+        let finalHtml = /*html*/`<h1>🏭 Test Results — ${successfulTests} of ${totalTests} tests successful</h1><span>⏱️ Finished on ${timeStamp}, taking ${testResult.executionTime}ms</span>`;
 
         for (const testClass of testResult.testResults) {
             const successfulTests = testClass.results.filter(testFunctionResult => testFunctionResult.error === undefined).length;

@@ -28,7 +28,17 @@ export class TestRunnerConsole {
 
     showResults(testResult) {
         const timeStamp = formatDate(testResult.completionTime);
+
+        let totalTests = 0;
+        let successfulTests = 0;
+
+        for (const testClass of testResult.testResults) {
+            totalTests += testClass.results.length;
+            successfulTests += testClass.results.filter(testFunctionResult => testFunctionResult.error === undefined).length;
+        }
+
         console.info(`🏭 Tests finished on ${timeStamp}, taking ${testResult.executionTime}ms`);
+        console.info(`${successfulTests} of ${totalTests} tests succeeded`);
 
         for (const testClass of testResult.testResults) {
             console.info("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");

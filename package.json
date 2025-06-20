@@ -6,6 +6,12 @@
   "main": "index.js",
   "repository": "github:kompanie-dev/testwerk",
   "type": "module",
+  "files": [
+    "source/",
+    "styles/",
+    "index.js",
+    "index.css"
+  ],
   "scripts": {
     "lint": "eslint .",
     "test": "npx diener --livereload --port=8000"

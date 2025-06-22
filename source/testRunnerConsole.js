@@ -63,5 +63,9 @@ export class TestRunnerConsole {
                 }
             }
         }
+
+        if (typeof process !== "undefined" && process.exit && successfulTests !== totalTests) {
+            process.exit(1);
+        }
     }
 }

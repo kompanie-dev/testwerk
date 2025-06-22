@@ -14,10 +14,10 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "test": "npx diener --livereload --port=8000"
+    "test": "npx diener --livereload --ignore-git --ignore-nodemodules --port=8000"
   },
   "devDependencies": {
-    "@kompanie/diener": "^1.0.4",
+    "@kompanie/diener": "^2.0.0",
     "eslint": "^9.29.0"
   }
 }

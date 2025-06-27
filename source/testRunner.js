@@ -11,12 +11,7 @@ export class TestRunner {
 
     async run(...testClasses) {
         const startTime = Date.now();
-
-        const testClassPromises = testClasses.map(
-            testClass => this.runTestClass(testClass)
-        );
-
-        const testResults = await Promise.all(testClassPromises);
+        const testResults = await Promise.all(testClasses.map(testClass => this.runTestClass(testClass)));
         const endTime = Date.now();
 
         return {
@@ -34,13 +29,14 @@ export class TestRunner {
             Object
                 .getOwnPropertyNames(testClass.prototype)
                 .filter(
-                    propertyName => ["constructor", "afterAll", "afterEach", "beforeAll", "beforeEach"].includes(propertyName) === false &&
-                    instance[propertyName] instanceof Function
+                    propertyName =>
+                        ["constructor", "afterAll", "afterEach", "beforeAll", "beforeEach"].includes(propertyName) === false &&
+                        typeof instance[propertyName] === "function"
                 );
 
-        const testFunctionNamesWithLifeCycle = ["beforeAll", ...testFunctionNames, "afterAll"];
+        const allFunctions = ["beforeAll", ...testFunctionNames, "afterAll"];
 
-        for (let functionName of testFunctionNamesWithLifeCycle) {
+        for (const functionName of allFunctions) {
             const testFunctionResult = await this.runTestFunction(instance, functionName);
 
             results.push(testFunctionResult);
@@ -52,38 +48,36 @@ export class TestRunner {
         };
     }
 
-    async executeTestFunctionWithTimeout(testFunction, functionName, timeout) {
-        const functionPromiseOrResult = testFunction();
-
-        if (functionPromiseOrResult instanceof Promise) {
-            functionPromiseOrResult.catch(promiseError => { throw promiseError; });
-
-            const timeoutPromise = new Promise(
-                (_, reject) => {
-                    setTimeout(
-                        () => reject(new Error(`${functionName} took longer than ${timeout}ms and timed out`)), timeout
-                    );
-                });
-            
+    async executeTestFunctionWithTimeout(fn, functionName, timeout) {
+        try {
             await Promise.race([
-                functionPromiseOrResult,
-                timeoutPromise
+                Promise.resolve(fn()),
+                new Promise(
+                    (_, reject) => setTimeout(
+                        () => reject(new Error(`${functionName} timed out after ${timeout}ms`)),
+                        timeout
+                    )
+                )
             ]);
+        }
+        catch (error) {
+            throw error;
         }
     }
 
     async runTestFunction(testClassInstance, functionName) {
         const startTime = performance.now();
+        const isLifecycleFunction = ["beforeAll", "afterAll"].includes(functionName);
         let error;
 
         try {
-            if (functionName !== "beforeAll" && functionName !== "afterAll" && testClassInstance.beforeEach instanceof Function) {
+            if (isLifecycleFunction === false && typeof testClassInstance.beforeEach === "function") {
                 await this.executeTestFunctionWithTimeout(testClassInstance.beforeEach, `${functionName}.beforeEach`, this.#beforeEachTimeout);
             }
 
-            await this.executeTestFunctionWithTimeout(testClassInstance[functionName], functionName, this.#asyncTestTimeout);
-            
-            if (functionName !== "beforeAll" && functionName !== "afterAll" && testClassInstance.afterEach instanceof Function) {
+            await this.executeTestFunctionWithTimeout(testClassInstance[functionName].bind(testClassInstance), functionName, this.#asyncTestTimeout);
+
+            if (isLifecycleFunction === false && typeof testClassInstance.afterEach === "function") {
                 await this.executeTestFunctionWithTimeout(testClassInstance.afterEach, `${functionName}.afterEach`, this.#afterEachTimeout);
             }
         }

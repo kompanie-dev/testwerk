@@ -75,8 +75,10 @@ export class TestRunner {
                 await this.executeTestFunctionWithTimeout(testClassInstance.beforeEach, `${functionName}.beforeEach`, this.#beforeEachTimeout);
             }
 
-            await this.executeTestFunctionWithTimeout(testClassInstance[functionName].bind(testClassInstance), functionName, this.#asyncTestTimeout);
-
+            if (typeof testClassInstance[functionName] === "function") {
+                await this.executeTestFunctionWithTimeout(testClassInstance[functionName].bind(testClassInstance), functionName, this.#asyncTestTimeout);
+            }
+            
             if (isLifecycleFunction === false && typeof testClassInstance.afterEach === "function") {
                 await this.executeTestFunctionWithTimeout(testClassInstance.afterEach, `${functionName}.afterEach`, this.#afterEachTimeout);
             }

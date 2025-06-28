@@ -1,6 +1,6 @@
 {
   "name": "@kompanie/testwerk",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "license": "MIT",
   "description": "A dependency-free, buildless test runner for browsers and node.js",
   "main": "index.js",
